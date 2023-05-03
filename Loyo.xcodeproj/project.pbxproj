@@ -11,6 +11,9 @@
 		35B7F6162A013C4D00C654D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7F6152A013C4D00C654D8 /* ContentView.swift */; };
 		35B7F6182A013C4F00C654D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F6172A013C4F00C654D8 /* Assets.xcassets */; };
 		35B7F61B2A013C4F00C654D8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F61A2A013C4F00C654D8 /* Preview Assets.xcassets */; };
+		35B7F6232A01616400C654D8 /* web3swift in Frameworks */ = {isa = PBXBuildFile; productRef = 35B7F6222A01616400C654D8 /* web3swift */; };
+		35B7F6252A0167FC00C654D8 /* qr-code-dynamic.png in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F6242A0167FB00C654D8 /* qr-code-dynamic.png */; };
+		35B7F6272A01719C00C654D8 /* qr-code-dynamic(2).svg in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F6262A01719C00C654D8 /* qr-code-dynamic(2).svg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,8 @@
 		35B7F6152A013C4D00C654D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		35B7F6172A013C4F00C654D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35B7F61A2A013C4F00C654D8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		35B7F6242A0167FB00C654D8 /* qr-code-dynamic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "qr-code-dynamic.png"; path = "../../../Downloads/qr-code-dynamic.png"; sourceTree = "<group>"; };
+		35B7F6262A01719C00C654D8 /* qr-code-dynamic(2).svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "qr-code-dynamic(2).svg"; path = "../../../Downloads/qr-code-dynamic(2).svg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35B7F6232A01616400C654D8 /* web3swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +60,8 @@
 				35B7F6132A013C4D00C654D8 /* LoyoApp.swift */,
 				35B7F6152A013C4D00C654D8 /* ContentView.swift */,
 				35B7F6172A013C4F00C654D8 /* Assets.xcassets */,
+				35B7F6242A0167FB00C654D8 /* qr-code-dynamic.png */,
+				35B7F6262A01719C00C654D8 /* qr-code-dynamic(2).svg */,
 				35B7F6192A013C4F00C654D8 /* Preview Content */,
 			);
 			path = Loyo;
@@ -83,6 +91,9 @@
 			dependencies = (
 			);
 			name = Loyo;
+			packageProductDependencies = (
+				35B7F6222A01616400C654D8 /* web3swift */,
+			);
 			productName = Loyo;
 			productReference = 35B7F6102A013C4D00C654D8 /* Loyo.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +122,9 @@
 				Base,
 			);
 			mainGroup = 35B7F6072A013C4D00C654D8;
+			packageReferences = (
+				35B7F6212A01616400C654D8 /* XCRemoteSwiftPackageReference "web3swift" */,
+			);
 			productRefGroup = 35B7F6112A013C4D00C654D8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,6 +139,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35B7F6272A01719C00C654D8 /* qr-code-dynamic(2).svg in Resources */,
+				35B7F6252A0167FC00C654D8 /* qr-code-dynamic.png in Resources */,
 				35B7F61B2A013C4F00C654D8 /* Preview Assets.xcassets in Resources */,
 				35B7F6182A013C4F00C654D8 /* Assets.xcassets in Resources */,
 			);
@@ -339,6 +355,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		35B7F6212A01616400C654D8 /* XCRemoteSwiftPackageReference "web3swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/web3swift-team/web3swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		35B7F6222A01616400C654D8 /* web3swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35B7F6212A01616400C654D8 /* XCRemoteSwiftPackageReference "web3swift" */;
+			productName = web3swift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 35B7F6082A013C4D00C654D8 /* Project object */;
 }
