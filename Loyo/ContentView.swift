@@ -133,6 +133,7 @@ struct SelectedTokenView: View {
     @Environment(\.presentationMode) var presentationMode
     let tokenName: String
     let tokenBalance: Int =  Int.random(in: 1..<150)
+    @State var chosenRealWorldAssetId: UUID? = nil
     
     func getTokenName(name: String) -> String {
         if name == "" {
@@ -163,6 +164,34 @@ struct SelectedTokenView: View {
             Text(String(tokenBalance))
                 .font(Font.system(size: 30))
             
+            
+            if chosenRealWorldAssetId != nil {
+                if let chosenAssetItem = realWorldAssets.first(where: { $0.id == chosenRealWorldAssetId }) {
+                    HStack {
+                        Text(String(chosenAssetItem.name))
+                        Spacer()
+                        Text(String(chosenAssetItem.price))
+                        Spacer()
+                        Button (action: {
+                            print("Button tapped")
+                        }, label: {
+                            HStack {
+                                Image(systemName: "eurosign")
+                                Text("Star")
+                                Divider()
+                                Text("31")
+                            }
+                            .fixedSize()
+                        })
+                            .buttonStyle(.borderedProminent)
+
+                    }
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 35)
+                }
+            }
+            
+            Image(systemName: "dollarsign")
             Text("Choose your good:")
                 .padding(.top, 40)
             
@@ -183,6 +212,9 @@ struct SelectedTokenView: View {
                             }
                             .padding(.horizontal, 35)
                             .padding(.vertical, 10)
+                            .onTapGesture {
+                                chosenRealWorldAssetId = item.id
+                            }
                             }
                     }
                 }.tabItem {
