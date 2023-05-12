@@ -111,89 +111,89 @@ struct SelectedTokenView: View {
             Text(String(format: "%g", self.balance))
                 .font(Font.system(size: 30))
             
-            
-            if chosenRealWorldAssetId != nil {
-                if let chosenAssetItem = realWorldAssets.first(where: { $0.id == chosenRealWorldAssetId }) {
-                    HStack {
-                        Text(String(chosenAssetItem.name))
-                            .foregroundColor(Color.init(hex: "1b264f"))
-                        Spacer()
-                        if transactionPending {
-                            Text("Transaction pending")
-                                .foregroundColor(Color.init(hex: "ffad69"))
-                            Spacer()
-                            ProgressView()
-                        }
-                        else if transactionSuccess {
-                            Text("Transaction Success!")
-                                .foregroundColor(Color.init(hex: "99edcc"))
-                            Spacer()
-                            Image(systemName: "checkmark")
-                        }
-                        else {
-                            Button (action: {
-                                isPresentingConfirm = true
-                            }, label: {
-                                HStack {
-                                    Image(systemName: "dollarsign.circle")
-                                    Text(String(chosenAssetItem.price))
-                                    Text("Spend!")
-                                }
-                                .fixedSize()
-                            })
-                                .buttonStyle(.borderedProminent)
-                                .tint(Color.init(hex: "99edcc"))
-                                .foregroundColor(Color.black)
-                                .confirmationDialog("Are you sure?",
-                                  isPresented: $isPresentingConfirm) {
-                                    Button("Spend \(String(format: "%g", chosenAssetItem.price)) tokens for \(chosenAssetItem.name) ?") {
-                                        transactionPending = true
-                                        self.balance = balance - chosenAssetItem.price
-                                        let timer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { _ in
-                                            transactionPending = false
-                                            transactionSuccess = true
-                                            let timer2 = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { __ in
-                                                transactionSuccess = false
-                                            }
-                                        }
-                                   }
-                            }
-                        }
-                    }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 35)
-                }
-            }
-                        Text("Choose your good:")
-                .padding(.top, 40)
-            
             TabView {
-                ScrollView {
-                    VStack {
-                        ForEach(realWorldAssets, id: \.id) { item in
-                            Divider()
+                VStack{
+                    if chosenRealWorldAssetId != nil {
+                        if let chosenAssetItem = realWorldAssets.first(where: { $0.id == chosenRealWorldAssetId }) {
                             HStack {
-                                Text(item.name)
-                                        .font(.headline)
-                                        .foregroundColor(Color.init(hex: "1b264f"))
-                                
+                                Text(String(chosenAssetItem.name))
+                                    .foregroundColor(Color.init(hex: "1b264f"))
                                 Spacer()
-                                Text(String(item.price))
-                                        .font(Font.system(size: 15))
-                                        .foregroundColor(Color.init(hex: "0099f8"))
-                                
+                                if transactionPending {
+                                    Text("Transaction pending")
+                                        .foregroundColor(Color.init(hex: "ffad69"))
+                                    Spacer()
+                                    ProgressView()
+                                }
+                                else if transactionSuccess {
+                                    Text("Transaction Success!")
+                                        .foregroundColor(Color.init(hex: "99edcc"))
+                                    Spacer()
+                                    Image(systemName: "checkmark")
+                                }
+                                else {
+                                    Button (action: {
+                                        isPresentingConfirm = true
+                                    }, label: {
+                                        HStack {
+                                            Image(systemName: "dollarsign.circle")
+                                            Text(String(chosenAssetItem.price))
+                                            Text("Spend!")
+                                        }
+                                        .fixedSize()
+                                    })
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(Color.init(hex: "99edcc"))
+                                        .foregroundColor(Color.black)
+                                        .confirmationDialog("Are you sure?",
+                                          isPresented: $isPresentingConfirm) {
+                                            Button("Spend \(String(format: "%g", chosenAssetItem.price)) tokens for \(chosenAssetItem.name) ?") {
+                                                transactionPending = true
+                                                self.balance = balance - chosenAssetItem.price
+                                                let timer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { _ in
+                                                    transactionPending = false
+                                                    transactionSuccess = true
+                                                    let timer2 = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { __ in
+                                                        transactionSuccess = false
+                                                    }
+                                                }
+                                           }
+                                        }
+                                }
                             }
-                            .padding(.horizontal, 35)
                             .padding(.vertical, 10)
-                            .onTapGesture {
-                                chosenRealWorldAssetId = item.id
-                            }
-                            }
+                            .padding(.horizontal, 35)
+                        }
                     }
-                }.tabItem {
+                    Text("Choose your good:")
+                    ScrollView {
+                        VStack {
+                            ForEach(realWorldAssets, id: \.id) { item in
+                                Divider()
+                                HStack {
+                                    Text(item.name)
+                                            .font(.headline)
+                                            .foregroundColor(Color.init(hex: "1b264f"))
+                                    
+                                    Spacer()
+                                    Text(String(item.price))
+                                            .font(Font.system(size: 15))
+                                            .foregroundColor(Color.init(hex: "0099f8"))
+                                    
+                                }
+                                .padding(.horizontal, 35)
+                                .padding(.vertical, 10)
+                                .onTapGesture {
+                                    chosenRealWorldAssetId = item.id
+                                    }
+                                }
+                        }
+                    }
+                }
+                .tabItem {
                     Label("Spend Tokens", systemImage: "banknote")
                 }
-                Text("2")
+                SendTokenToFriendView()
                     .tabItem {
                         Label("Gift Friend", systemImage: "gift")
                     }
