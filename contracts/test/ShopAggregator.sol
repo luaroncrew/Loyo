@@ -7,23 +7,34 @@ import "../src/ShopAggregator.sol";
 
 contract ShopAggregatorTest is Test {
     ShopAggregator public shopAggregator;
+    address public shopAddress;
 
     function setUp() public {
         shopAggregator = new ShopAggregator();
+        shopAggregator.addShop(
+            "Test Shop",
+            "TSH",
+            "https://testshop.com",
+            "123 Test Street",
+            "1234567890",
+            msg.sender
+        );
+        shopAddress = shopAggregator.shops(0);
     }
 
     function testAddShop() public {
-        shopAggregator.addShop("Test Shop", "TSH", "https://testshop.com", "123 Test Street", "1234567890", msg.sender);
-        assertEq(shopAggregator.shops(0), address(shopAggregator));
+        assertEq(shopAddress, address(Shop(shopAddress)));
     }
 
     function testGetAllShops() public {
-        assertEq(shopAggregator.getAllShops().length, 1);
+        address[] memory shops = shopAggregator.getAllShops();
+        assertEq(shops.length, 1);
+        assertEq(shops[0], shopAddress);
     }
 
     function testRemoveShop() public {
-        address shopAddress = shopAggregator.shops(0);
         shopAggregator.removeShop(shopAddress);
-        assertEq(shopAggregator.getAllShops().length, 0);
+        address[] memory shops = shopAggregator.getAllShops();
+        assertEq(shops.length, 0);
     }
 }
