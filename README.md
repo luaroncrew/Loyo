@@ -13,3 +13,6 @@ Loyo is the new generation loyalty program infrastructure.
 ### Check our pitch deck:
 https://pitch.com/public/71f1c5f5-f052-40e3-9867-873ae42f7eaf]
 
+### Running project locally:
+To run the project locally, please, check `./contract` README.
+You'll have to execute a very simple bash script to deploy smart contracts and register a user.

@@ -21,6 +21,8 @@ public struct ShopItem: Identifiable {
     public let shopContractAddress: EthereumAddress
 }
 
+let SHOP_AGGREGATOR_ADDRESS = "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+
 class BlockchainConnector: ObservableObject {
     
     static let shared = BlockchainConnector()
@@ -184,7 +186,7 @@ class BlockchainConnector: ObservableObject {
         let client = EthereumHttpClient(url: clientUrl)
 
         do {
-            let aggregatorContract = ShopAggregatorContract(contract: "0x5fbdb2315678afecb367f032d93f642f64180aa3", client: client)
+            let aggregatorContract = ShopAggregatorContract(contract: SHOP_AGGREGATOR_ADDRESS, client: client)
 
             let shopAddresses = try await aggregatorContract.getAllShops()
 
