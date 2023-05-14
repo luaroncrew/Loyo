@@ -66,7 +66,6 @@ class BlockchainConnector: ObservableObject {
         }
     }
     
-    
     func executePayment(shopContractAddress: EthereumAddress, amount: BigUInt) async throws {
         guard let account = self.account else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
@@ -80,6 +79,73 @@ class BlockchainConnector: ObservableObject {
             let txHash = try await shopContract.transfer(to: shopContractAddress, amount: amount, account: account)
             
             print("txhash: \(txHash)")
+        } catch (let error) {
+            print("error happened: \(error)")
+        }
+    }
+    
+    
+    func executeRelayedPayment(shopContractAddress: EthereumAddress, amount: BigUInt) async throws {
+        guard let account = self.account else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
+        }
+        
+        guard let clientUrl = URL(string: "http://localhost:8545") else { return }
+        let client = EthereumHttpClient(url: clientUrl)
+
+        do {
+            let shopContract = ShopContract(contract: shopContractAddress.asString(), client: client)
+            
+            let gasPrice = try await client.eth_gasPrice()
+            let to = shopContractAddress
+            let from = account.address
+            
+            let tryCall = ShopFunctions.transfer(contract: shopContractAddress, from: from, gasPrice: gasPrice, to: to, amount: amount)
+            let subdata = try tryCall.transaction()
+            let gas = try await client.eth_estimateGas(subdata)
+            let function = ShopFunctions.transfer(contract: shopContractAddress, from: from, gasPrice: gasPrice,gasLimit: gas, to: to, amount: amount)
+            let data = try function.transaction()
+            
+            
+            // Inject pending nonce
+            let nonce = try await client.eth_getTransactionCount(address: account.address, block: .Pending)
+
+            var transaction = data
+            transaction.nonce = nonce
+
+            if transaction.chainId == nil, let network = client.network {
+                transaction.chainId = network.intValue
+            }
+
+            guard let _ = transaction.chainId, let signedTx = (try? account.sign(transaction: transaction)), let transactionHex = signedTx.raw?.web3.hexString else {
+                throw EthereumClientError.encodeIssue
+            }
+    
+            // Create the URL of your API endpoint
+            let url = URL(string: "http://localhost:3000/transactions")!
+
+            // Create the request
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            // Create the request body
+            let requestBody: [String: Any] = ["signedTransaction": transactionHex]
+            let requestBodyData = try! JSONSerialization.data(withJSONObject: requestBody)
+
+            request.httpBody = requestBodyData
+
+            // Send the request
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print("Error: \(error)")
+                } else if let data = data {
+                    let str = String(data: data, encoding: .utf8)
+                    print("Received data:\n\(str ?? "")")
+                }
+            }
+
+            task.resume()
         } catch (let error) {
             print("error happened: \(error)")
         }
