@@ -14,12 +14,13 @@ struct AccountQRCodeView: View {
     var body: some View {
         if blockchainConnector.isAccountInitialized {
             if let cgImage = EFQRCode.generate(
-                content: blockchainConnector.account?.address.asString() ?? "error",
-                watermark: nil
+                content: blockchainConnector.account?.address.asString() ?? "error"
             ) {
                 Image(uiImage: UIImage(cgImage: cgImage))
                     .resizable()
                     .frame(width: 200, height: 200)
+                    .scaledToFit()
+                            
             } else {
                 Image(systemName: "xmark.circle") // Or some other placeholder image
             }
@@ -28,5 +29,6 @@ struct AccountQRCodeView: View {
             Text("Loading...")
         }
     }
+
 }
 

@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
+import BigInt
 
 struct SpendBonusPointsView: View {
-    @Binding var chosenShopBalance: Double
-    @Binding var selectedTokenName: String
     @Binding var selectedToken: Bool
-
+    @Binding var selectedShopId: UUID?
+    
+    var shops: [ShopItem]
     
     var body: some View {
         VStack {
             Text("Spend Bonus Points")
-                .font(Font.system(size: 36))
+                .font(Font.system(size: 24))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(
 
@@ -29,7 +30,8 @@ struct SpendBonusPointsView: View {
                 .padding(15)
             
 
-            ForEach(items, id: \.id) { item in
+            
+            ForEach(shops, id: \.id) { item in
                 Divider()
                 HStack {
                     Text(item.name)
@@ -37,7 +39,7 @@ struct SpendBonusPointsView: View {
                             .foregroundColor(Color.init(hex: "1b264f"))
                     
                     Spacer()
-                    Text(String(item.balance))
+                    Text(convertToString(amount: item.balance, decimals: 18))
                             .font(Font.system(size: 15))
                             .foregroundColor(Color.init(hex: "0099F8"))
                     
@@ -46,10 +48,10 @@ struct SpendBonusPointsView: View {
                 .padding(.vertical, 10)
                 .onTapGesture {
                     selectedToken.toggle()
-                    selectedTokenName = item.name
-                    chosenShopBalance = item.balance
+                    selectedShopId = item.id
                 }
             }
+            Spacer()
         }
     }
 }
