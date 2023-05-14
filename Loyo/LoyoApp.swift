@@ -12,6 +12,9 @@ struct LoyoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear(perform: {
+                    BlockchainConnector.shared.initializeAccount()
+                })
         }
     }
 }
