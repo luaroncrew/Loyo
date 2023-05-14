@@ -11,11 +11,26 @@ forge inspect Shop abi > abi/Shop.json
 ```
 
 ### Running locally
+Before to run the iOS app, make sure to deploy ShopAggregator contract.
 ```sh
 chmod +x ./local.sh
 
-./local.sh # run every options in the asc order. Make sure to provide USER_ADDRESS in local.sh by scanning it from the iPhone app.
+./local.sh # type "1" - choose the 1st option to deploy your ShopAggregator contract
 ```
+Once deployed, you'll find ShopAggregator's address in `.env` file. Copy it and paste to `app/Loyo/BlockchainConnectors.swift` file line 24.
+
+Open XCode and run the iOS app. You'll see a QR code on the first screen. Scan it and paste the value inside `contracts/local.sh`. It will allow us to register user's address in shops smart contracts.
+
+Then let's get back to smart contracts.
+
+```sh
+./local.sh #type "2" - it will generate shops smart contracts
+./local.sh #type "3" - it will register our user in all shops smart contracts
+./local.sh #type "4" - it will send some tokens to the user to pay the gas (gasless txs in progress, `./relayer` folder)
+```
+
+Now, you can test the app and spend your loyalty points to buy some real goodies! 
+
 
 ### Development
 
