@@ -39,7 +39,7 @@ struct SpendBonusPointsView: View {
                             .foregroundColor(Color.init(hex: "1b264f"))
                     
                     Spacer()
-                    Text(convertToString(amount: item.balance, decimals: 18))
+                    Text(convertToString(amount: item.balance, decimals: 2))
                             .font(Font.system(size: 15))
                             .foregroundColor(Color.init(hex: "0099F8"))
                     

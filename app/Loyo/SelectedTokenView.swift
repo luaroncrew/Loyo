@@ -121,6 +121,7 @@ struct SelectedTokenView: View {
                                                     do {
                                                         //                                                        try await blockchainConnector.executePayment(shopContractAddress: shopItem.shopContractAddress, amount: BigUInt(chosenAssetItem.price))
                                                         try await blockchainConnector.executePayment(shopContractAddress: shopItem.shopContractAddress, amount: chosenAssetItem.price)
+                                                        
                                                         try await blockchainConnector.updateShopBalance(shopContractAddress: shopItem.shopContractAddress)
                                                         transactionPending = false
                                                         transactionSuccess = true
