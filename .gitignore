@@ -1,0 +1,4 @@
+**/bin/*
+**/lib/*
+./app/Loyo.xcworkspace/*
+./app/Loyo.xcodeproj/*

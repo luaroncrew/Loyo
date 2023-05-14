@@ -7,18 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1144F8422A0FDC870014B129 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 1144F8412A0FDC870014B129 /* EFQRCode */; };
+		1144F8442A0FEBF20014B129 /* GradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8432A0FEBF20014B129 /* GradientBackgroundView.swift */; };
+		1144F8462A0FEC470014B129 /* BonusPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8452A0FEC470014B129 /* BonusPointsView.swift */; };
+		1144F8482A0FEC5F0014B129 /* SpendBonusPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8472A0FEC5F0014B129 /* SpendBonusPointsView.swift */; };
+		1144F84A2A0FEC820014B129 /* AccountQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8492A0FEC820014B129 /* AccountQRCodeView.swift */; };
+		1144F84C2A0FF5280014B129 /* SelectedTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F84B2A0FF5280014B129 /* SelectedTokenView.swift */; };
+		117BB1642A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg in Resources */ = {isa = PBXBuildFile; fileRef = 117BB1632A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg */; };
+		117BB1662A0EBEC000F9BC78 /* qr-code-dynamic.png in Resources */ = {isa = PBXBuildFile; fileRef = 117BB1652A0EBEC000F9BC78 /* qr-code-dynamic.png */; };
+		117BB1692A0F8BAA00F9BC78 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = 117BB1682A0F8BAA00F9BC78 /* web3.swift */; };
 		354593C42A093C6800BE65FB /* BlockchainConnectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354593C32A093C6800BE65FB /* BlockchainConnectors.swift */; };
 		354593C62A093F7E00BE65FB /* SendTokenToFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354593C52A093F7E00BE65FB /* SendTokenToFriendView.swift */; };
 		35B7F6142A013C4D00C654D8 /* LoyoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7F6132A013C4D00C654D8 /* LoyoApp.swift */; };
 		35B7F6162A013C4D00C654D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7F6152A013C4D00C654D8 /* ContentView.swift */; };
 		35B7F6182A013C4F00C654D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F6172A013C4F00C654D8 /* Assets.xcassets */; };
 		35B7F61B2A013C4F00C654D8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F61A2A013C4F00C654D8 /* Preview Assets.xcassets */; };
-		35B7F6232A01616400C654D8 /* web3swift in Frameworks */ = {isa = PBXBuildFile; productRef = 35B7F6222A01616400C654D8 /* web3swift */; };
-		35B7F6252A0167FC00C654D8 /* qr-code-dynamic.png in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F6242A0167FB00C654D8 /* qr-code-dynamic.png */; };
-		35B7F6272A01719C00C654D8 /* qr-code-dynamic(2).svg in Resources */ = {isa = PBXBuildFile; fileRef = 35B7F6262A01719C00C654D8 /* qr-code-dynamic(2).svg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1144F8432A0FEBF20014B129 /* GradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackgroundView.swift; sourceTree = "<group>"; };
+		1144F8452A0FEC470014B129 /* BonusPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusPointsView.swift; sourceTree = "<group>"; };
+		1144F8472A0FEC5F0014B129 /* SpendBonusPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendBonusPointsView.swift; sourceTree = "<group>"; };
+		1144F8492A0FEC820014B129 /* AccountQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountQRCodeView.swift; sourceTree = "<group>"; };
+		1144F84B2A0FF5280014B129 /* SelectedTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTokenView.swift; sourceTree = "<group>"; };
+		117BB1632A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "qr-code-dynamic(2).svg"; path = "Loyo/Assets.xcassets/qr-code-dynamic(2).imageset/qr-code-dynamic(2).svg"; sourceTree = "<group>"; };
+		117BB1652A0EBEC000F9BC78 /* qr-code-dynamic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "qr-code-dynamic.png"; path = "Loyo/Assets.xcassets/qr-code-dynamic.imageset/qr-code-dynamic.png"; sourceTree = "<group>"; };
 		354593C32A093C6800BE65FB /* BlockchainConnectors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainConnectors.swift; sourceTree = "<group>"; };
 		354593C52A093F7E00BE65FB /* SendTokenToFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTokenToFriendView.swift; sourceTree = "<group>"; };
 		35B7F6102A013C4D00C654D8 /* Loyo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loyo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,7 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35B7F6232A01616400C654D8 /* web3swift in Frameworks */,
+				117BB1692A0F8BAA00F9BC78 /* web3.swift in Frameworks */,
+				1144F8422A0FDC870014B129 /* EFQRCode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +59,8 @@
 		35B7F6072A013C4D00C654D8 = {
 			isa = PBXGroup;
 			children = (
+				117BB1652A0EBEC000F9BC78 /* qr-code-dynamic.png */,
+				117BB1632A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg */,
 				35B7F6122A013C4D00C654D8 /* Loyo */,
 				35B7F6112A013C4D00C654D8 /* Products */,
 			);
@@ -69,6 +85,11 @@
 				35B7F6242A0167FB00C654D8 /* qr-code-dynamic.png */,
 				35B7F6262A01719C00C654D8 /* qr-code-dynamic(2).svg */,
 				35B7F6192A013C4F00C654D8 /* Preview Content */,
+				1144F8432A0FEBF20014B129 /* GradientBackgroundView.swift */,
+				1144F8452A0FEC470014B129 /* BonusPointsView.swift */,
+				1144F8472A0FEC5F0014B129 /* SpendBonusPointsView.swift */,
+				1144F8492A0FEC820014B129 /* AccountQRCodeView.swift */,
+				1144F84B2A0FF5280014B129 /* SelectedTokenView.swift */,
 			);
 			path = Loyo;
 			sourceTree = "<group>";
@@ -98,7 +119,8 @@
 			);
 			name = Loyo;
 			packageProductDependencies = (
-				35B7F6222A01616400C654D8 /* web3swift */,
+				117BB1682A0F8BAA00F9BC78 /* web3.swift */,
+				1144F8412A0FDC870014B129 /* EFQRCode */,
 			);
 			productName = Loyo;
 			productReference = 35B7F6102A013C4D00C654D8 /* Loyo.app */;
@@ -129,7 +151,8 @@
 			);
 			mainGroup = 35B7F6072A013C4D00C654D8;
 			packageReferences = (
-				35B7F6212A01616400C654D8 /* XCRemoteSwiftPackageReference "web3swift" */,
+				117BB1672A0F8BA900F9BC78 /* XCRemoteSwiftPackageReference "web3" */,
+				1144F8402A0FDC870014B129 /* XCRemoteSwiftPackageReference "EFQRCode" */,
 			);
 			productRefGroup = 35B7F6112A013C4D00C654D8 /* Products */;
 			projectDirPath = "";
@@ -145,8 +168,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35B7F6272A01719C00C654D8 /* qr-code-dynamic(2).svg in Resources */,
-				35B7F6252A0167FC00C654D8 /* qr-code-dynamic.png in Resources */,
+				117BB1662A0EBEC000F9BC78 /* qr-code-dynamic.png in Resources */,
+				117BB1642A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg in Resources */,
 				35B7F61B2A013C4F00C654D8 /* Preview Assets.xcassets in Resources */,
 				35B7F6182A013C4F00C654D8 /* Assets.xcassets in Resources */,
 			);
@@ -159,10 +182,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1144F84C2A0FF5280014B129 /* SelectedTokenView.swift in Sources */,
+				1144F84A2A0FEC820014B129 /* AccountQRCodeView.swift in Sources */,
 				354593C42A093C6800BE65FB /* BlockchainConnectors.swift in Sources */,
+				1144F8482A0FEC5F0014B129 /* SpendBonusPointsView.swift in Sources */,
+				1144F8462A0FEC470014B129 /* BonusPointsView.swift in Sources */,
 				35B7F6162A013C4D00C654D8 /* ContentView.swift in Sources */,
 				35B7F6142A013C4D00C654D8 /* LoyoApp.swift in Sources */,
 				354593C62A093F7E00BE65FB /* SendTokenToFriendView.swift in Sources */,
+				1144F8442A0FEBF20014B129 /* GradientBackgroundView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,21 +393,34 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		35B7F6212A01616400C654D8 /* XCRemoteSwiftPackageReference "web3swift" */ = {
+		1144F8402A0FDC870014B129 /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/web3swift-team/web3swift.git";
+			repositoryURL = "https://github.com/EFPrefix/EFQRCode";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 6.0.0;
+			};
+		};
+		117BB1672A0F8BA900F9BC78 /* XCRemoteSwiftPackageReference "web3" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argentlabs/web3.swift";
+			requirement = {
+				branch = develop;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		35B7F6222A01616400C654D8 /* web3swift */ = {
+		1144F8412A0FDC870014B129 /* EFQRCode */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35B7F6212A01616400C654D8 /* XCRemoteSwiftPackageReference "web3swift" */;
-			productName = web3swift;
+			package = 1144F8402A0FDC870014B129 /* XCRemoteSwiftPackageReference "EFQRCode" */;
+			productName = EFQRCode;
+		};
+		117BB1682A0F8BAA00F9BC78 /* web3.swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 117BB1672A0F8BA900F9BC78 /* XCRemoteSwiftPackageReference "web3" */;
+			productName = web3.swift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
