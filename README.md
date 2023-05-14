@@ -44,10 +44,18 @@ and deploy the token for business
 
 See ```backend_data_collecter_layer/```
 
-## Swift application frontend
 
+### Running project locally:
+To run the project locally, please, check `./contract` README.
+You'll have to execute a very simple bash script to deploy smart contracts and register a user.
+
+## Swift application frontend
 See ```app/```
 
 ## Swift application connection with the blockchain and test
 
 See ```contracts/```
+
+
+### GSN aka gasless transactions:
+We are planning to add support for gasless transactions. The user will not require BNB tokens to pay with loyalty points. For this, we have begun writing a relayer server and added a new method to `app/Loyo/BlockchainConnector` - `executeRelayedPayment`. This part took quite a lot of time, as signing the transaction through the web3.swift library by argentlabs guys was not easy. We also plan to use the GSN Starter Kit for our Shop smart contracts.
