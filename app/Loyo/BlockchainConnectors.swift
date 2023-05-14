@@ -10,44 +10,24 @@ import Security
 import web3
 import BigInt
 
-public struct Transfer: ABIFunction {
-    public static let name = "transfer"
-    public let gasPrice: BigUInt? = nil
-    public let gasLimit: BigUInt? = nil
-    public var contract: EthereumAddress
-    public let from: EthereumAddress?
-
-    public let to: EthereumAddress
-    public let value: BigUInt
-
-    public init(contract: EthereumAddress,
-                from: EthereumAddress? = nil,
-                to: EthereumAddress,
-                value: BigUInt) {
-        self.contract = contract
-        self.from = from
-        self.to = to
-        self.value = value
-    }
-
-    public func encode(to encoder: ABIFunctionEncoder) throws {
-        try encoder.encode(to)
-        try encoder.encode(value)
-    }
+public struct ShopItem: Identifiable {
+    public let id = UUID()
+    public let website: String
+    public let address: String
+    public let phoneNumber: String
+    public let symbol: String
+    public let name: String
+    public var balance: BigUInt
+    public let shopContractAddress: EthereumAddress
 }
 
-protocol BlockchainConnectorProtocol {
-    var account: EthereumAccount? { get }
-    func initializeAccount() throws
-    func executePayment() throws
-}
-
-class BlockchainConnector: ObservableObject, BlockchainConnectorProtocol {
+class BlockchainConnector: ObservableObject {
     
     static let shared = BlockchainConnector()
     public var account: EthereumAccount?
     @Published var isAccountInitialized = false
-    
+    @Published var shops: [ShopItem] = []
+
     private init() { }
     
     private let privateKeyTag = "com.yourappname.privateKey".data(using: .utf8)!
@@ -87,25 +67,90 @@ class BlockchainConnector: ObservableObject, BlockchainConnectorProtocol {
     }
     
     
-    func executePayment() throws {
+    func executePayment(shopContractAddress: EthereumAddress, amount: BigUInt) async throws {
         guard let account = self.account else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
         }
         
-        guard let clientUrl = URL(string: "https://an-infura-or-similar-url.com/123") else { return }
+        guard let clientUrl = URL(string: "http://localhost:8545") else { return }
         let client = EthereumHttpClient(url: clientUrl)
 
-        
-        let function = Transfer(contract: "0x", from: "0x", to: "0xto", value: 100)
-        let transaction = try function.transaction()
-
-        client.eth_sendRawTransaction(transaction, withAccount: account) { result in
-            switch result {
-            case .success(let txHash):
-                print("TX Hash: \(txHash)")
-            case .failure(let error):
-                print("Transaction failed with error: \(error)")
-            }
+        do {
+            let shopContract = ShopContract(contract: shopContractAddress.asString(), client: client)
+            let txHash = try await shopContract.transfer(to: shopContractAddress, amount: amount, account: account)
+            
+            print("txhash: \(txHash)")
+        } catch (let error) {
+            print("error happened: \(error)")
         }
     }
+    
+    func updateShopBalance(shopContractAddress: EthereumAddress) async throws {
+        guard let account = self.account else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
+        }
+        
+        guard let clientUrl = URL(string: "http://localhost:8545") else { return }
+        let client = EthereumHttpClient(url: clientUrl)
+
+        do {
+            let shopContract = ShopContract(contract: shopContractAddress.asString(), client: client)
+            let userBalance = try await shopContract.balanceOf(account: account.address)
+            
+            // iterate over all shops to update the balance
+            for (index, shop) in self.shops.enumerated() {
+                if shop.shopContractAddress == shopContractAddress {
+                    self.shops[index].balance = userBalance
+                }
+            }
+        } catch (let error) {
+            print("error happened: \(error)")
+        }
+    }
+    
+    func fetchShops() async throws {
+    
+        guard let account = self.account else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
+        }
+        
+        guard let clientUrl = URL(string: "http://localhost:8545") else { return }
+        let client = EthereumHttpClient(url: clientUrl)
+
+        do {
+            let aggregatorContract = ShopAggregatorContract(contract: "0x5fbdb2315678afecb367f032d93f642f64180aa3", client: client)
+
+            let shopAddresses = try await aggregatorContract.getAllShops()
+
+            var fetchedShops = [ShopItem]()
+            for shopAddress in shopAddresses {
+                let shopContract = ShopContract(contract: shopAddress.asString(), client: client)
+
+                let shopWebsite = try await shopContract.shopWebsite()
+                let shopAddress = try await shopContract.shopAddress()
+                let shopPhoneNumber = try await shopContract.shopPhoneNumber()
+                let shopSymbol = try await shopContract.symbol()
+                let shopName = try await shopContract.name()
+                let userBalance = try await shopContract.balanceOf(account: account.address)
+
+                let shop = ShopItem(
+                    website: shopWebsite,
+                    address: shopAddress,
+                    phoneNumber: shopPhoneNumber,
+                    symbol: shopSymbol,
+                    name: shopName,
+                    balance: userBalance,
+                    shopContractAddress: shopContract.contract
+                )
+                fetchedShops.append(shop)
+            }
+            
+            self.shops = fetchedShops
+
+            print("shops \(shops)")
+        } catch (let error) {
+            print("error happened: \(error)")
+        }
+    }
+
 }
