@@ -13,16 +13,14 @@ contract ShopAggregator is Ownable {
         string memory shopWebsite,
         string memory shopAddress,
         string memory shopPhoneNumber,
-        address shopOwner,
-        address forwarder
+        address shopOwner
     ) public onlyOwner {
         Shop newShop = new Shop(
             name,
             symbol,
             shopWebsite,
             shopAddress,
-            shopPhoneNumber,
-            forwarder
+            shopPhoneNumber
         );
         newShop.transferOwnership(shopOwner);
         shops.push(address(newShop));

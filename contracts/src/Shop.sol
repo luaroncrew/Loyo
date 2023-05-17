@@ -3,9 +3,8 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@opengsn/ERC2771Recipient.sol";
 
-contract Shop is ERC20, Ownable, ERC2771Recipient {
+contract Shop is ERC20, Ownable {
     string public shopWebsite;
     string public shopAddress;
     string public shopPhoneNumber;
@@ -15,20 +14,18 @@ contract Shop is ERC20, Ownable, ERC2771Recipient {
         string memory symbol,
         string memory _shopWebsite,
         string memory _shopAddress,
-        string memory _shopPhoneNumber,
-        address _forwarder
+        string memory _shopPhoneNumber
     ) ERC20(name, symbol) {
         shopWebsite = _shopWebsite;
         shopAddress = _shopAddress;
         shopPhoneNumber = _shopPhoneNumber;
-        _setTrustedForwarder(_forwarder);
     }
 
-    function registerUser(address user, uint256 amount) public {
+    function registerUser(address user, uint256 amount) public onlyOwner {
         _mint(user, amount);
     }
 
-    function deleteUser(address user) public {
+    function deleteUser(address user) public onlyOwner {
         _burn(user, balanceOf(user));
     }
 
@@ -42,15 +39,7 @@ contract Shop is ERC20, Ownable, ERC2771Recipient {
         shopPhoneNumber = _shopPhoneNumber;
     }
 
-    function creditUser(address user, uint256 amount) public {
+    function creditUser(address user, uint256 amount) public onlyOwner {
         _mint(user, amount);
-    }
-
-    function _msgData() internal override(ERC2771Recipient, Context) view returns (bytes calldata ret) {
-        return ERC2771Recipient._msgData();
-    }
-
-    function _msgSender() internal override(ERC2771Recipient, Context) view returns (address ret) {
-        return ERC2771Recipient._msgSender();
     }
 }
