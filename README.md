@@ -1,6 +1,8 @@
 ![](images/logo.png)
 (built by new Heroes from zero during BnB zero to hero hack ^_^)
 
+[![Build and Test](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml/badge.svg)](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml)
+
 LOYO is the new generation loyalty program infrastructure.
 
 LOYO is two applications, connected to a system of services on the blockchain:
