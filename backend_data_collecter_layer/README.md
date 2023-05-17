@@ -89,7 +89,7 @@ gnfd-cmd -c config.toml storage put --contentType "text/xml" --visibility privat
 ```
 
 It will update the file transactions.csv on the GREENFIELD:
-![](../greenfield.png)
+![](../images/greenfield.png)
 
 The access to transactions.csv will then be controlled by smart contracts to give the access to 
 the database for businesses, who contribute there frequently.

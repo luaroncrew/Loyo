@@ -1,4 +1,4 @@
-![](logo.png)
+![](images/logo.png)
 (built by new Heroes from zero during BnB zero to hero hack ^_^)
 
 LOYO is the new generation loyalty program infrastructure.
@@ -36,7 +36,8 @@ to do during the hackathon.
 `/businessLoyo` - angular application for businesses 🚧 !under construction!
 
 ## Client Application
-![](tech_diagram_2.png)
+![](images/tech_diagram_2.png)
+![](images/swiftapp.png)
 
 Currently, Loyo is accessible only on IOS devices. 
 It's a Swift application. This application is
@@ -53,10 +54,10 @@ Key technical decisions:
 
 
 ## Set Up For Businesses 🚧 under construction
-![](tech_diagram_1.png)
+![](images/tech_diagram_1.png)
 
 It will look something like:
-![](frontend.png)
+![](images/frontend.png)
 
 When businesses want to use Loyo, they have to set up their 
 business token. They can easily do this using the frontend. 

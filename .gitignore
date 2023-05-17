@@ -6,4 +6,5 @@
 ./app/Loyo.xcworkspace/*
 ./app/Loyo.xcodeproj/*
 **/node_modules/*
-**/build/*  
+**/build/*
+.idea
