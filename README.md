@@ -1,6 +1,14 @@
 ![](logo.png)
-Loyo is the new generation loyalty program infrastructure.
+(built by new Heroes from zero during BnB zero to hero hack ^_^)
 
+LOYO is the new generation loyalty program infrastructure.
+
+LOYO is two applications, connected to a system of services on the blockchain:
+
+- business LOYO: angular web application for business.
+- LOYO: swift application for clients.
+
+## features of LOYO:
 ### For clients: 
 - no personal data required to get and spend loyalty rewards
 - easy-to-use application, all commercials promos at one place
@@ -9,10 +17,23 @@ Loyo is the new generation loyalty program infrastructure.
 - 500x less infrastructure costs
 - open decentralized data about clients' transactions with endless insight opportunities.
 
-### Check our pitch deck and demo!:
+# Check our pitch deck and demo!:
 https://pitch.com/public/71f1c5f5-f052-40e3-9867-873ae42f7eaf
 
 # Technical description
+
+This repository contains all the services, applications, contracts and docs we managed
+to do during the hackathon.
+
+`/app` - swift application 
+
+`/backend_data_collecter_layer` - transaction handling and sending to GREENFIELD
+
+`/contracts` - smart contracts for business logic implementation
+
+`/gsn-contracts` - compatible contracts, gasless transactions 🚧 !under construction!
+
+`/businessLoyo` - angular application for businesses 🚧 !under construction!
 
 ## Client Application
 ![](tech_diagram_2.png)
@@ -33,6 +54,9 @@ Key technical decisions:
 
 ## Set Up For Businesses 🚧 under construction
 ![](tech_diagram_1.png)
+
+It will look something like:
+![](frontend.png)
 
 When businesses want to use Loyo, they have to set up their 
 business token. They can easily do this using the frontend. 

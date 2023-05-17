@@ -52,12 +52,8 @@ server to the GREENFIELD data storage.
 So, on the server, we have to create ```config.toml``` :
 
 ```toml
-endpoint = "https://gnfd-testnet-sp-1.bnbchain.org"
-rpcAddr = "gnfd-testnet-fullnode-cosmos-us.bnbchain.org:9090"
+rpcAddr = "https://gnfd-testnet-fullnode-tendermint-us.bnbchain.org:443"
 chainId = "greenfield_5600-1"
-privateKey = "xxxxxxx"
-publicKey = "0x35979BDd030CF42508151FFEDd961263FC50133A"
-PasswordFile = "password.txt"
 passwordFile = "password.txt"
 ```
 
@@ -70,11 +66,15 @@ nano key.txt
 ```
 insert the private key in this file
 
+```shell
+nano password.txt
+```
+insert your personal password in this file
+
 then run
 ```shell
 gnfd-cmd gen-key --privKeyFile key.txt key.json
 ```
-
 
 ## Cron Job
 
@@ -88,8 +88,9 @@ gnfd-cmd -c config.toml storage del-obj gnfd://loyo-application/transactions.csv
 gnfd-cmd -c config.toml storage put --contentType "text/xml" --visibility private ./transactions.csv  gnfd://loyo-application/transactions.csv 
 ```
 
-It will update the file transactions.csv on the GREENFIELD 
+It will update the file transactions.csv on the GREENFIELD:
+![](../greenfield.png)
 
-
-
+The access to transactions.csv will then be controlled by smart contracts to give the access to 
+the database for businesses, who contribute there frequently.
 
