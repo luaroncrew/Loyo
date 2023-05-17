@@ -1,0 +1,30 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: "Install Foundry"
+      uses: "foundry-rs/foundry-toolchain@v1"
+    
+    - name: Build
+      run: |
+        cd contracts
+        forge install
+        forge build
+
+    - name: Test
+      run: |
+        cd contracts
+        forge test

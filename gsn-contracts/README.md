@@ -32,5 +32,5 @@ npx hardhat run scripts/deploy.ts # deploy and initiate smart contracts
 - RelayHub: coordinates the process in a trustless way
 
 ⚠️ Issues:
-Loyo app doesn's support yet EIP-712 signatures. The app can broadcast transaction to Forwarder, but it's rejected due to the invalid signature (the screen below). The purpose of this package is to show that it's possible to enable gasless transactions. 
+Loyo app doesn's support yet EIP-712 signatures. The app can broadcast transaction to Forwarder, but it's rejected due to the invalid signature (the screen below). The purpose of this package is to show that it's possible to enable gasless transactions. If you want to test the app with the working UI <> smart contracts connection, check out `contracts` folder.
 ![eip](./eip712-error.png)

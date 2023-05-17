@@ -1,7 +1,20 @@
-We're using foundry toolkit to build, test & deploy smart contracts. 
+# Loyo smart contracts
+
+🪄 Smart contracts:
+- Shop aggregator: creates and manages shops contracts
+- Shop: registers and manages users and shop's metadata
+
+
+We're using [foundry](https://getfoundry.sh/) toolkit to build, test & deploy smart contracts. 
 
 ### Getting started
 ```sh
+# install foundry if not already installed
+curl -L https://foundry.paradigm.xyz | bash
+
+# install forge install OpenZeppelin contracts
+forge install OpenZeppelin/openzeppelin-contracts
+
 forge build # build contracts
 forge test # test them
 
@@ -31,7 +44,6 @@ Then let's get back to smart contracts.
 
 Now, you can test the app and spend your loyalty points to buy some real goodies! 
 
-
 ### Development
 
 When you update smart contracts, you'll need to update interfaces in the iOS app. Follow the instructions:
@@ -44,5 +56,7 @@ npx swiftabigen ShopAggregator
 # Copy .swift files to app/Loyo
 ```
 
-### Deployement
+### Deployment
 `ShopAggregator` is deployed to `0xD2AF1735ddFa496bC8Edd6a83b6Cf60b71Ba9692` on BSC testnet.
+
+We decided to keep testing locally to simplify the workflow (every time you'd have to register a new user, generated in the XCode app preview, and you'd need a private key of each shop to do this) 
