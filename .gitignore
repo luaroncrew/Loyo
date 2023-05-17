@@ -1,4 +1,9 @@
 **/bin/*
 **/lib/*
+**/out/*
+**/.env
+**/broadcast/*
 ./app/Loyo.xcworkspace/*
 ./app/Loyo.xcodeproj/*
+**/node_modules/*
+**/build/*  

@@ -14,7 +14,8 @@ contract ShopTest is Test {
             "TSH",
             "https://testshop.com",
             "123 Test Street",
-            "1234567890"
+            "1234567890",
+            address(0)
         );
     }
 

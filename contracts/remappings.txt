@@ -1,2 +1,2 @@
 @openzeppelin/=lib/openzeppelin-contracts/
-
+@opengsn/=lib/gsn/packages/contracts/src
