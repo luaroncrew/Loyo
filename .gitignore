@@ -5,3 +5,5 @@
 **/broadcast/*
 ./app/Loyo.xcworkspace/*
 ./app/Loyo.xcodeproj/*
+**/node_modules/*
+**/build/*  
