@@ -17,7 +17,8 @@ contract ShopAggregatorTest is Test {
             "https://testshop.com",
             "123 Test Street",
             "1234567890",
-            msg.sender
+            msg.sender,
+            address(0)
         );
         shopAddress = shopAggregator.shops(0);
     }

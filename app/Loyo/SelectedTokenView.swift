@@ -120,7 +120,7 @@ struct SelectedTokenView: View {
                                                 Task.init {
                                                     do {
                                                         //                                                        try await blockchainConnector.executePayment(shopContractAddress: shopItem.shopContractAddress, amount: BigUInt(chosenAssetItem.price))
-                                                        try await blockchainConnector.executeRelayedPayment(shopContractAddress: shopItem.shopContractAddress, amount: chosenAssetItem.price)
+                                                        try await blockchainConnector.executePayment(shopContractAddress: shopItem.shopContractAddress, amount: chosenAssetItem.price)
                                                         
                                                         try await blockchainConnector.updateShopBalance(shopContractAddress: shopItem.shopContractAddress)
                                                         transactionPending = false

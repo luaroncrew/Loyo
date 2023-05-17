@@ -7,8 +7,23 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract ShopAggregator is Ownable {
     address[] public shops;
 
-    function addShop(string memory name, string memory symbol, string memory shopWebsite, string memory shopAddress, string memory shopPhoneNumber, address shopOwner) public onlyOwner {
-        Shop newShop = new Shop(name, symbol, shopWebsite, shopAddress, shopPhoneNumber);
+    function addShop(
+        string memory name,
+        string memory symbol,
+        string memory shopWebsite,
+        string memory shopAddress,
+        string memory shopPhoneNumber,
+        address shopOwner,
+        address forwarder
+    ) public onlyOwner {
+        Shop newShop = new Shop(
+            name,
+            symbol,
+            shopWebsite,
+            shopAddress,
+            shopPhoneNumber,
+            forwarder
+        );
         newShop.transferOwnership(shopOwner);
         shops.push(address(newShop));
     }
@@ -18,7 +33,7 @@ contract ShopAggregator is Ownable {
     }
 
     function removeShop(address shopAddress) public onlyOwner {
-        for(uint i = 0; i < shops.length; i++) {
+        for (uint i = 0; i < shops.length; i++) {
             if (shops[i] == shopAddress) {
                 shops[i] = shops[shops.length - 1];
                 shops.pop();
