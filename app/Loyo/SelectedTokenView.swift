@@ -110,7 +110,6 @@ struct SelectedTokenView: View {
                                                 
                                                 Task.init {
                                                     do {
-                                                        //                                                        try await blockchainConnector.executePayment(shopContractAddress: shopItem.shopContractAddress, amount: BigUInt(chosenAssetItem.price))
                                                         try await blockchainConnector.executePayment(shopContractAddress: shopItem.shopContractAddress, amount: chosenAssetItem.price)
                                                         
                                                         try await blockchainConnector.updateShopBalance(shopContractAddress: shopItem.shopContractAddress)
@@ -186,11 +185,6 @@ let realWorldAssets = [
     RealWorldAsset(icon: "milk", name: "Milkshake", price: BigUInt(549)),
     RealWorldAsset(icon: "flame", name: "Hot Chocolate", price: BigUInt(499))
 ]
-
-
-func getUserWalletAddress() -> String {
-    return "0x6B45151E6F052177838f024d6a25C4c29a159231"
-}
 
 
 extension Color {

@@ -10,6 +10,9 @@ import Security
 import web3
 import BigInt
 
+public var TEST_SHOP_TOKEN_ADDRESS = EthereumAddress("0x0D138a23541905e963a32eBD227C96ec741408a0")
+
+
 public struct ShopItem: Identifiable {
     public let id = UUID()
     public let website: String
@@ -31,7 +34,7 @@ let SHOP_AGGREGATOR_ADDRESS = "0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8"
 let PAYMASTER_ADDRESS = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
 let FORWARDER_ADDRESS = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
 let RELAY_SERVER = "http://127.0.0.1:58115"
-let NODE_RPC = "http://127.0.0.1:8545"
+let NODE_RPC = "https://goerli.infura.io/v3/3aef5670598a414992a39bdaeb5880e0"
 
 class BlockchainConnector: ObservableObject {
     
@@ -255,7 +258,6 @@ class BlockchainConnector: ObservableObject {
     }
     
     func fetchShops() async throws {
-    
         guard let account = self.account else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
         }
@@ -298,4 +300,49 @@ class BlockchainConnector: ObservableObject {
             print("error happened: \(error)")
         }
     }
+    
+    func sendToFriend(friendName: String, amount: Int) async throws {
+        let friendAddress = self.resolveFriendName(ENSName: friendName)
+        
+        guard let account = self.account else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
+        }
+        guard let clientUrl = URL(string: NODE_RPC) else { return }
+        let client = EthereumHttpClient(url: clientUrl)
+        
+        do {
+            let shopContract = ShopContract(contract: TEST_SHOP_TOKEN_ADDRESS.asString(), client: client)
+            let txHash = try await shopContract.transfer(to: friendAddress, amount: BigUInt(amount), account: account)
+            
+            print("txhash: \(txHash)")
+        } catch (let error) {
+            print("error happened: \(error)")
+        }
+    }
+    
+    
+    func resolveFriendName(ENSName: String) -> EthereumAddress{
+        // Implement logic here
+        return EthereumAddress("0x35979BDd030CF42508151FFEDd961263FC50133A")
+    }
+    
+    func getShopBalance(shopContractAddress: EthereumAddress) async throws -> String {
+        guard let account = self.account else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
+        }
+        guard let clientUrl = URL(string: NODE_RPC) else {
+            return "15"
+        }
+        let client = EthereumHttpClient(url: clientUrl)
+
+        do {
+            let shopContract = ShopContract(contract: shopContractAddress.asString(), client: client)
+            let userBalance = try await shopContract.balanceOf(account: account.address)
+            return convertToString(amount: userBalance, decimals: 18)
+        } catch (let error) {
+            print("error happened: \(error)")
+        }
+        return "10"
+    }
+    
 }

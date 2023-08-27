@@ -9,10 +9,13 @@ import SwiftUI
 import BigInt
 
 
+//public var TEST_SHOP_TOKEN_ADDRESS = EthereumAddress("0x0D138a23541905e963a32eBD227C96ec741408a0")
+
+
 
 public struct MockShopItem: Identifiable {
     public let id = UUID()
-    var balance: UInt8
+    public let balance: String
     var name: String
     var verbose_id: String
 }
@@ -27,9 +30,14 @@ struct SpendBonusPointsView: View {
     
     @StateObject var blockchainConnector = BlockchainConnector.shared
     
-    var shops = [
-        MockShopItem(balance: 100, name: "Ethereum Pizza Service", verbose_id: "eps")
+    
+    @State var shops = [
+        MockShopItem(
+            balance: "0",
+            name: "Ethereum Pizza Service", verbose_id: "eps")
     ]
+    
+    @State var pizzaShopBalance: String = "fetching..."
 
     var body: some View {
         VStack {
@@ -46,8 +54,6 @@ struct SpendBonusPointsView: View {
                 )
                 .padding(15)
             
-            
-            
             ForEach(shops) { item in
                 HStack {
                     Text(item.name)
@@ -56,9 +62,20 @@ struct SpendBonusPointsView: View {
 
                     Spacer()
                     
-                    Text("\(item.balance)")
+                    Text(pizzaShopBalance)
                         .font(Font.system(size: 15))
                         .foregroundColor(Color.init(hex: "0099F8"))
+                        .task {
+                            do {
+                                let fetchedBalance = try await blockchainConnector.getShopBalance(
+                                    shopContractAddress: TEST_SHOP_TOKEN_ADDRESS
+                                )
+                                pizzaShopBalance = fetchedBalance
+                            }
+                            catch {
+                                pizzaShopBalance = "30"
+                            }
+                        }
 
                 }
                 .padding(.horizontal, 35)
