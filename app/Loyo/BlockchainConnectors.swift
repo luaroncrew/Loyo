@@ -302,7 +302,8 @@ class BlockchainConnector: ObservableObject {
     }
     
     func sendToFriend(friendName: String, amount: Int) async throws {
-        let friendAddress = self.resolveFriendName(ENSName: friendName)
+        let friendAddress = try await self.resolveFriendName(ENSName: friendName)
+        let _amount = BigUInt(amount * 1000000000000000000)
         
         guard let account = self.account else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
@@ -312,7 +313,7 @@ class BlockchainConnector: ObservableObject {
         
         do {
             let shopContract = ShopContract(contract: TEST_SHOP_TOKEN_ADDRESS.asString(), client: client)
-            let txHash = try await shopContract.transfer(to: friendAddress, amount: BigUInt(amount), account: account)
+            let txHash = try await shopContract.transfer(to: friendAddress, amount: _amount, account: account)
             
             print("txhash: \(txHash)")
         } catch (let error) {
@@ -321,9 +322,17 @@ class BlockchainConnector: ObservableObject {
     }
     
     
-    func resolveFriendName(ENSName: String) -> EthereumAddress{
-        // Implement logic here
-        return EthereumAddress("0x35979BDd030CF42508151FFEDd961263FC50133A")
+    func resolveFriendName(ENSName: String) async throws -> EthereumAddress{
+        guard let account = self.account else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
+        }
+        guard let clientUrl = URL(string: NODE_RPC) else {
+            return "errorResolvingClientUrl"
+        }
+        let client = EthereumHttpClient(url: clientUrl)
+        let ens = EthereumNameService(client: client)
+        let address = try await ens.resolve(ens: ENSName, mode: ResolutionMode.allowOffchainLookup)
+        return address
     }
     
     func getShopBalance(shopContractAddress: EthereumAddress) async throws -> String {
@@ -331,7 +340,7 @@ class BlockchainConnector: ObservableObject {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
         }
         guard let clientUrl = URL(string: NODE_RPC) else {
-            return "15"
+            return "errorResolvingClientUrl"
         }
         let client = EthereumHttpClient(url: clientUrl)
 
@@ -342,7 +351,7 @@ class BlockchainConnector: ObservableObject {
         } catch (let error) {
             print("error happened: \(error)")
         }
-        return "10"
+        return "errorGettingBalance"
     }
     
 }

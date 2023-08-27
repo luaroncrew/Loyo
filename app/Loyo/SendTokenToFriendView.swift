@@ -21,7 +21,7 @@ struct SendTokenToFriendView: View {
         VStack {
             HStack {
                 if let name = self.chosenFriend {
-                    
+                
                     Text("\(name)")
                     TextField("0", value: $amountToSend, format: .number)
                         .textFieldStyle(.roundedBorder)
@@ -37,6 +37,7 @@ struct SendTokenToFriendView: View {
                                             amount: amount
                                         )
                                     }
+                                    isPresentingConfirm.toggle()
                                 } catch {
                                     print("Transaction failed: \(error)")
                                 }
@@ -103,15 +104,9 @@ struct Friend: Identifiable {
 }
 
 let friends = [
-        Friend(ensAddress: "nikita.eth"),
+        Friend(ensAddress: "kirill.offchaindemo.eth"),
         Friend(ensAddress: "emily.eth"),
         Friend(ensAddress: "michael.eth"),
         Friend(ensAddress: "sarah.eth"),
         Friend(ensAddress: "david.eth")
 ]
-
-struct SendTokenToFriendView_Previews: PreviewProvider {
-    static var previews: some View {
-        SendTokenToFriendView()
-    }
-}

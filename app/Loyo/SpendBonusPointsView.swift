@@ -37,7 +37,7 @@ struct SpendBonusPointsView: View {
             name: "Ethereum Pizza Service", verbose_id: "eps")
     ]
     
-    @State var pizzaShopBalance: String = "fetching..."
+    @State var pizzaShopBalance: String = "0"
 
     var body: some View {
         VStack {
@@ -62,7 +62,7 @@ struct SpendBonusPointsView: View {
 
                     Spacer()
                     
-                    Text(pizzaShopBalance)
+                    Text(pizzaShopBalance.prefix(3))
                         .font(Font.system(size: 15))
                         .foregroundColor(Color.init(hex: "0099F8"))
                         .task {
