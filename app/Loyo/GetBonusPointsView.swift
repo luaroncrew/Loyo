@@ -8,7 +8,7 @@
 import SwiftUI
 import EFQRCode
 
-struct BonusPointsView: View {
+struct GetBonusPointsView: View {
     
     @StateObject var blockchainConnector = BlockchainConnector.shared
     
@@ -18,17 +18,14 @@ struct BonusPointsView: View {
                 .font(Font.system(size: 24))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Color.white)
-                .padding(15)
+                .padding(.top, 20)
             
 
                                 
             if blockchainConnector.isAccountInitialized {
                 if let cgImage = EFQRCode.generate(
                      content: blockchainConnector.account?.address.asString() ?? "error",
-                     backgroundColor: CGColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0),
-                     foregroundColor: CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
-                     pointShape: EFPointShape(rawValue: 1)!,
-                     foregroundPointOffset: CGFloat(2)
+                     backgroundColor: CGColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.0)
                 ) {
                     Image(uiImage: UIImage(cgImage: cgImage))
                         .resizable()

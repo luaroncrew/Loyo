@@ -260,7 +260,7 @@ class BlockchainConnector: ObservableObject {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
         }
         
-        guard let clientUrl = URL(string: NODE_RPC") else { return }
+        guard let clientUrl = URL(string: NODE_RPC) else { return }
         let client = EthereumHttpClient(url: clientUrl)
 
         do {
@@ -298,5 +298,4 @@ class BlockchainConnector: ObservableObject {
             print("error happened: \(error)")
         }
     }
-
 }

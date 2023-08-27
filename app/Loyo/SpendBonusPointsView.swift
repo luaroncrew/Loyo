@@ -8,51 +8,73 @@
 import SwiftUI
 import BigInt
 
+
+
+public struct MockShopItem: Identifiable {
+    public let id = UUID()
+    var balance: UInt8
+    var name: String
+    var verbose_id: String
+}
+
+
+
+// a view presenting multiple shops where the user has some points
+
 struct SpendBonusPointsView: View {
-    @Binding var selectedToken: Bool
-    @Binding var selectedShopId: UUID?
+    @State var tokenSelected: Bool
+    @State var selectedShopId: UUID?
     
-    var shops: [ShopItem]
+    @StateObject var blockchainConnector = BlockchainConnector.shared
     
+    var shops = [
+        MockShopItem(balance: 100, name: "Ethereum Pizza Service", verbose_id: "eps")
+    ]
+
     var body: some View {
         VStack {
             Text("Spend Bonus Points")
                 .font(Font.system(size: 24))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(
-
+                    
                     LinearGradient(
                         gradient: Gradient(colors: [Color.init(hex: "99EDCC"), Color.init(hex: "0099F8")]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
                 )
                 .padding(15)
             
-
             
-            ForEach(shops, id: \.id) { item in
-                Divider()
+            
+            ForEach(shops) { item in
                 HStack {
                     Text(item.name)
-                            .font(.headline)
-                            .foregroundColor(Color.init(hex: "1b264f"))
-                    
+                        .font(.headline)
+                        .foregroundColor(Color.init(hex: "1b264f"))
+
                     Spacer()
-                    Text(convertToString(amount: item.balance, decimals: 2))
-                            .font(Font.system(size: 15))
-                            .foregroundColor(Color.init(hex: "0099F8"))
                     
+                    Text("\(item.balance)")
+                        .font(Font.system(size: 15))
+                        .foregroundColor(Color.init(hex: "0099F8"))
+
                 }
                 .padding(.horizontal, 35)
                 .padding(.vertical, 10)
                 .onTapGesture {
-                    selectedToken.toggle()
+                    tokenSelected.toggle()
                     selectedShopId = item.id
                 }
             }
             Spacer()
         }
+        .sheet(isPresented: $tokenSelected) {
+            SelectedTokenView(
+                selectedShopId: $selectedShopId,
+                shops: blockchainConnector.shops
+            )
+        }
     }
 }
-

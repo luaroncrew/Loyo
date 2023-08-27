@@ -8,7 +8,7 @@ extension UUID: Identifiable {
 
 @available(iOS 16.0, *)
 struct ContentView: View {
-    @State var selectedToken: Bool = false
+    @State var tokenSelected: Bool = false
     @State var selectedShopId: UUID?
 
     @StateObject var blockchainConnector = BlockchainConnector.shared
@@ -17,7 +17,7 @@ struct ContentView: View {
         TabView {
             ZStack {
                 GradientBackgroundView()
-                BonusPointsView()
+                GetBonusPointsView()
             }
             .tabItem {
                  Image(systemName: "house")
@@ -30,9 +30,8 @@ struct ContentView: View {
             }
 
             SpendBonusPointsView(
-                selectedToken: $selectedToken,
-                selectedShopId: $selectedShopId,
-                shops: blockchainConnector.shops
+                tokenSelected: tokenSelected,
+                selectedShopId: selectedShopId
             )
             .background(Color.white)
             .cornerRadius(15)
@@ -40,14 +39,7 @@ struct ContentView: View {
                 Image(systemName: "dollarsign.circle")
                 Text("Spend")
             }
-            .sheet(item: $selectedShopId) { _ in
-                   SelectedTokenView(
-                       selectedShopId: $selectedShopId,
-                       shops: blockchainConnector.shops
-                   )
-               }
         }
         .toolbarColorScheme(.dark, for: .tabBar)
-
     }
 }

@@ -25,16 +25,7 @@ struct SelectedTokenView: View {
 
     var body: some View {
         NavigationView {
-            
             VStack {
-                //            HStack{
-                //                Button("Back") {
-                //                    presentationMode.wrappedValue.dismiss()
-                //                }
-                //                Spacer()
-                //            }
-                //            .padding(.horizontal, 20)
-                
                 HStack{
                     Button("Back") {
                         presentationMode.wrappedValue.dismiss()
@@ -70,7 +61,7 @@ struct SelectedTokenView: View {
                         Text(convertToString(amount: shopItem.balance, decimals: 2))
                             .font(Font.system(size: 30))
                     } else {
-                        Text("Shop Item Not Found")
+                        Text("Ethereum Pizza Service")
                             .font(Font.system(size: 30))
                     }
                 } else {
@@ -167,10 +158,6 @@ struct SelectedTokenView: View {
                             }
                         }
                     }
-                    //                SendTokenToFriendView()
-                    //                    .tabItem {
-                    //                        Label("Gift Friend", systemImage: "gift")
-                    //                    }
                 }
                 .accentColor(Color.init(hex: "d14081"))
             }.padding(.top, 20)

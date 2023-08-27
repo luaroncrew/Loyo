@@ -9,9 +9,8 @@
 /* Begin PBXBuildFile section */
 		1144F8422A0FDC870014B129 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 1144F8412A0FDC870014B129 /* EFQRCode */; };
 		1144F8442A0FEBF20014B129 /* GradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8432A0FEBF20014B129 /* GradientBackgroundView.swift */; };
-		1144F8462A0FEC470014B129 /* BonusPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8452A0FEC470014B129 /* BonusPointsView.swift */; };
+		1144F8462A0FEC470014B129 /* GetBonusPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8452A0FEC470014B129 /* GetBonusPointsView.swift */; };
 		1144F8482A0FEC5F0014B129 /* SpendBonusPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8472A0FEC5F0014B129 /* SpendBonusPointsView.swift */; };
-		1144F84A2A0FEC820014B129 /* AccountQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F8492A0FEC820014B129 /* AccountQRCodeView.swift */; };
 		1144F84C2A0FF5280014B129 /* SelectedTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1144F84B2A0FF5280014B129 /* SelectedTokenView.swift */; };
 		117BB1642A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg in Resources */ = {isa = PBXBuildFile; fileRef = 117BB1632A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg */; };
 		117BB1662A0EBEC000F9BC78 /* qr-code-dynamic.png in Resources */ = {isa = PBXBuildFile; fileRef = 117BB1652A0EBEC000F9BC78 /* qr-code-dynamic.png */; };
@@ -33,9 +32,8 @@
 
 /* Begin PBXFileReference section */
 		1144F8432A0FEBF20014B129 /* GradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackgroundView.swift; sourceTree = "<group>"; };
-		1144F8452A0FEC470014B129 /* BonusPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusPointsView.swift; sourceTree = "<group>"; };
+		1144F8452A0FEC470014B129 /* GetBonusPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBonusPointsView.swift; sourceTree = "<group>"; };
 		1144F8472A0FEC5F0014B129 /* SpendBonusPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendBonusPointsView.swift; sourceTree = "<group>"; };
-		1144F8492A0FEC820014B129 /* AccountQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountQRCodeView.swift; sourceTree = "<group>"; };
 		1144F84B2A0FF5280014B129 /* SelectedTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTokenView.swift; sourceTree = "<group>"; };
 		117BB1632A0EBEAC00F9BC78 /* qr-code-dynamic(2).svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "qr-code-dynamic(2).svg"; path = "Loyo/Assets.xcassets/qr-code-dynamic(2).imageset/qr-code-dynamic(2).svg"; sourceTree = "<group>"; };
 		117BB1652A0EBEC000F9BC78 /* qr-code-dynamic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "qr-code-dynamic.png"; path = "Loyo/Assets.xcassets/qr-code-dynamic.imageset/qr-code-dynamic.png"; sourceTree = "<group>"; };
@@ -100,9 +98,8 @@
 				35B7F6262A01719C00C654D8 /* qr-code-dynamic(2).svg */,
 				35B7F6192A013C4F00C654D8 /* Preview Content */,
 				1144F8432A0FEBF20014B129 /* GradientBackgroundView.swift */,
-				1144F8452A0FEC470014B129 /* BonusPointsView.swift */,
+				1144F8452A0FEC470014B129 /* GetBonusPointsView.swift */,
 				1144F8472A0FEC5F0014B129 /* SpendBonusPointsView.swift */,
-				1144F8492A0FEC820014B129 /* AccountQRCodeView.swift */,
 				1144F84B2A0FF5280014B129 /* SelectedTokenView.swift */,
 				11B93DE32A10DE05009D4EF0 /* ShopAggregator.swift */,
 				11B93DE52A10DE12009D4EF0 /* ShopAggregatorFunctions.swift */,
@@ -204,14 +201,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1144F84C2A0FF5280014B129 /* SelectedTokenView.swift in Sources */,
-				1144F84A2A0FEC820014B129 /* AccountQRCodeView.swift in Sources */,
 				11B93DE42A10DE05009D4EF0 /* ShopAggregator.swift in Sources */,
 				11B93DEA2A10DE2F009D4EF0 /* ShopAggregatorResponses.swift in Sources */,
 				354593C42A093C6800BE65FB /* BlockchainConnectors.swift in Sources */,
 				1144F8482A0FEC5F0014B129 /* SpendBonusPointsView.swift in Sources */,
 				11B93DF02A10E519009D4EF0 /* ShopResponses.swift in Sources */,
 				11B93DF32A111912009D4EF0 /* Utils.swift in Sources */,
-				1144F8462A0FEC470014B129 /* BonusPointsView.swift in Sources */,
+				1144F8462A0FEC470014B129 /* GetBonusPointsView.swift in Sources */,
 				35B7F6162A013C4D00C654D8 /* ContentView.swift in Sources */,
 				11B93DEC2A10E4E8009D4EF0 /* Shop.swift in Sources */,
 				11B93DEE2A10E507009D4EF0 /* ShopFunctions.swift in Sources */,
