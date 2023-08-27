@@ -9,7 +9,6 @@ import SwiftUI
 import BigInt
 
 
-//public var TEST_SHOP_TOKEN_ADDRESS = EthereumAddress("0x0D138a23541905e963a32eBD227C96ec741408a0")
 
 
 

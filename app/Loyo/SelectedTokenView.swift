@@ -17,6 +17,7 @@ struct SelectedTokenView: View {
     @State private var isPresentingConfirm: Bool = false
     @State var transactionPending = false
     @State var transactionSuccess = false
+    @State var selectedShopBalance = "0"
     
     @State private var isPresentingSendTokenToFriendView = false
 
@@ -49,21 +50,22 @@ struct SelectedTokenView: View {
                 
                 
                 if let selectedShopId = selectedShopId {
-                    
-                    if let shopItem = shops.first(where: { $0.id == selectedShopId }) {
-                        Text(shopItem.name)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .padding(.vertical, 20)
-                        
-                        Text("Balance:")
-                            .font(Font.system(size: 18))
-                        Text(convertToString(amount: shopItem.balance, decimals: 2))
-                            .font(Font.system(size: 30))
-                    } else {
-                        Text("Ethereum Pizza Service")
-                            .font(Font.system(size: 30))
-                    }
+                    Text("Ethereum Pizza Service")
+                        .font(Font.system(size: 30))
+                    Text("Balance:")
+                        .font(Font.system(size: 18))
+                    Text(selectedShopBalance.prefix(4))
+                        .font(Font.system(size: 30))
+                        .task {
+                            do {
+                                let fetchedBalance = try await blockchainConnector.getShopBalance(
+                                 shopContractAddress: TEST_SHOP_TOKEN_ADDRESS
+                                )
+                                selectedShopBalance = fetchedBalance
+                            } catch {
+                                selectedShopBalance = "10"
+                            }
+                        }
                 } else {
                     Text("No Shop Item Selected")
                         .font(Font.system(size: 30))
