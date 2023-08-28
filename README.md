@@ -1,5 +1,5 @@
 ![](images/logo.png)
-(built by new Heroes from zero during BnB zero to hero hack ^_^)
+(built by new Heroes from zero during a hackathon ^_^)
 
 [![Build and Test](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml/badge.svg)](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml)
 
