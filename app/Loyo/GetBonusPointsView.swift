@@ -64,9 +64,19 @@ struct GetBonusPointsView: View {
                                 .multilineTextAlignment(.center)
                             if usernameInputText != "" {
                                 Button("Submit username") {
-                                    // register ENS domain name (like in workshop)
-                                    userEnsName = usernameInputText
-                                    showUsernameField = false
+                                    Task.init {
+                                        // register ENS domain name (like in workshop)
+                                        do {
+                                            try await blockchainConnector.registerName(
+                                                ENSName: usernameInputText
+                                            )
+                                            userEnsName = usernameInputText
+                                            showUsernameField = false
+                                        } catch {
+                                            print("error while trying to register the name, fuck")
+                                        }
+                                    }
+                                    
                                 }
                             }
                         }

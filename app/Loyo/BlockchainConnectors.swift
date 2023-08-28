@@ -1,17 +1,10 @@
-//
-//  BlockchainConnectors.swift
-//  Loyo
-//
-//  Created by Kirill on 5/8/23.
-//
-
 import Foundation
 import Security
 import web3
 import BigInt
 
 public var TEST_SHOP_TOKEN_ADDRESS = EthereumAddress("0x0D138a23541905e963a32eBD227C96ec741408a0")
-public var TEST_REGISTRY_URL: URL = URL(string: "https://ens-gateway.gregskril.workers.dev/")!
+public var TEST_REGISTRY_URL: URL = URL(string: "https://ens-gateway.gregskril.workers.dev/set")!
 
 
 public struct ShopItem: Identifiable {
@@ -27,7 +20,6 @@ public struct ShopItem: Identifiable {
 
 struct PrepareTxResponse: Codable {
     let relayWorkerAddress: String
-    // Add other fields here if needed
 }
 
 
@@ -323,6 +315,8 @@ class BlockchainConnector: ObservableObject {
     
     
     func resolveFriendName(ENSName: String) async throws -> EthereumAddress{
+        
+        
         guard let account = self.account else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
         }
@@ -357,13 +351,27 @@ class BlockchainConnector: ObservableObject {
     
     
     func registerName(ENSName: String) async throws {
+        
+        guard let account = self.account else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
+        }
+        
         var request = URLRequest(url: TEST_REGISTRY_URL)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
+        
+        var signature = try account.sign(message: "Register \(ENSName).offchaindemo.eth")
+        
         let parameters: [String: Any] = [
-            "id": 13,
-            "name": "Jack & Jill"
+            "name": "\(ENSName).offchaindemo.eth",
+            "owner": "\(account.address)",
+            "addresses": ["60": "\(account.address)"],
+            "texts": "",
+            "signature": [
+                "hash": signature,
+                "message": "Register \(ENSName).offchaindemo.eth"
+            ]
         ]
         request.httpBody = parameters.percentEncoded()
         

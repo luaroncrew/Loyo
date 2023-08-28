@@ -33,7 +33,7 @@ struct SpendBonusPointsView: View {
     @State var shops = [
         MockShopItem(
             balance: "0",
-            name: "Ethereum Pizza Service", verbose_id: "eps")
+            name: "Ethereum Pizza Station", verbose_id: "eps")
     ]
     
     @State var pizzaShopBalance: String = "0"
