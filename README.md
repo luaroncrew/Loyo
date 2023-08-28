@@ -1,5 +1,5 @@
 ![](images/logo.png)
-(built by new Heroes from zero during a hackathon ^_^)
+(built by new Heroes from zero during hackathons ^_^)
 
 [![Build and Test](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml/badge.svg)](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml)
 
@@ -33,7 +33,7 @@ to do during the hackathon.
 
 `/contracts` - smart contracts for business logic implementation
 
-`/gsn-contracts` - compatible contracts, gasless transactions 🚧 !under construction!
+`/gsn-contracts` - compatible contracts, gasless transactions 🚧 !under construction! Would be cool to integrate using Arbitrum AA
 
 `/businessLoyo` - angular application for businesses 🚧 !under construction!
 
