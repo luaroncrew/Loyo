@@ -11,6 +11,7 @@ import web3
 import BigInt
 
 public var TEST_SHOP_TOKEN_ADDRESS = EthereumAddress("0x0D138a23541905e963a32eBD227C96ec741408a0")
+public var TEST_REGISTRY_URL: URL = URL(string: "https://ens-gateway.gregskril.workers.dev/")!
 
 
 public struct ShopItem: Identifiable {
@@ -81,18 +82,17 @@ class BlockchainConnector: ObservableObject {
         }
     }
     
-    func executePayment(shopContractAddress: EthereumAddress, amount: BigUInt) async throws {
+    func executePayment(shopContractAddress: EthereumAddress, amount: Int) async throws {
+        let _amount = BigUInt(amount * 1000000000000000000)
         guard let account = self.account else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Ethereum account is not initialized"])
         }
-        
         guard let clientUrl = URL(string: NODE_RPC) else { return }
         let client = EthereumHttpClient(url: clientUrl)
 
         do {
             let shopContract = ShopContract(contract: shopContractAddress.asString(), client: client)
-            let txHash = try await shopContract.transfer(to: shopContractAddress, amount: amount, account: account)
-            
+            let txHash = try await shopContract.transfer(to: shopContractAddress, amount: _amount, account: account)
             print("txhash: \(txHash)")
         } catch (let error) {
             print("error happened: \(error)")
@@ -354,4 +354,59 @@ class BlockchainConnector: ObservableObject {
         return "errorGettingBalance"
     }
     
+    
+    
+    func registerName(ENSName: String) async throws {
+        var request = URLRequest(url: TEST_REGISTRY_URL)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpMethod = "POST"
+        let parameters: [String: Any] = [
+            "id": 13,
+            "name": "Jack & Jill"
+        ]
+        request.httpBody = parameters.percentEncoded()
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {                                                               // check for fundamental networking error
+                print("error", error ?? URLError(.badServerResponse))
+                return
+            }
+            
+            guard (200 ... 299) ~= response.statusCode else {                    // check for http errors
+                print("statusCode should be 2xx, but is \(response.statusCode)")
+                print("response = \(response)")
+                return
+            }
+        }
+
+        task.resume()
+    }
+}
+
+extension Dictionary {
+    func percentEncoded() -> Data? {
+        map { key, value in
+            let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            return escapedKey + "=" + escapedValue
+        }
+        .joined(separator: "&")
+        .data(using: .utf8)
+    }
+}
+
+extension CharacterSet {
+    static let urlQueryValueAllowed: CharacterSet = {
+        let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
+        let subDelimitersToEncode = "!$&'()*+,;="
+        
+        var allowed: CharacterSet = .urlQueryAllowed
+        allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
+        return allowed
+    }()
 }

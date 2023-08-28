@@ -1,10 +1,3 @@
-//
-//  SelectedTokenView.swift
-//  Loyo
-//
-//  Created by Nikita TEREKHOV on 13/05/2023.
-//
-
 import SwiftUI
 import BigInt
 
@@ -13,20 +6,22 @@ struct SelectedTokenView: View {
     @Binding var selectedShopId: UUID?
     var shops: [ShopItem]
     
-    @State var chosenRealWorldAssetId: UUID? = nil
+    @State var chosenRealWorldAsset: RealWorldAsset? = nil
     @State private var isPresentingConfirm: Bool = false
     @State var transactionPending = false
     @State var transactionSuccess = false
     @State var selectedShopBalance = "0"
     
     @State private var isPresentingSendTokenToFriendView = false
-
+    
     
     @StateObject var blockchainConnector = BlockchainConnector.shared
-
+    
     var body: some View {
         NavigationView {
             VStack {
+                
+                // header with buttons
                 HStack{
                     Button("Back") {
                         presentationMode.wrappedValue.dismiss()
@@ -47,147 +42,143 @@ struct SelectedTokenView: View {
                     .cornerRadius(10)
                 }
                 .padding(.horizontal, 20)
+                .padding(.vertical, 10)
                 
-                
-                if let selectedShopId = selectedShopId {
-                    Text("Ethereum Pizza Service")
-                        .font(Font.system(size: 30))
-                    Text("Balance:")
-                        .font(Font.system(size: 18))
-                    Text(selectedShopBalance.prefix(4))
-                        .font(Font.system(size: 30))
-                        .task {
-                            do {
-                                let fetchedBalance = try await blockchainConnector.getShopBalance(
-                                 shopContractAddress: TEST_SHOP_TOKEN_ADDRESS
-                                )
-                                selectedShopBalance = fetchedBalance
-                            } catch {
-                                selectedShopBalance = "10"
-                            }
+                // selected shop and balance
+                Text("Ethereum Pizza Service")
+                    .font(Font.system(size: 30))
+                Text("Balance:")
+                    .font(Font.system(size: 18))
+                Text(selectedShopBalance.prefix(4))
+                    .font(Font.system(size: 30))
+                    .task {
+                        do {
+                            let fetchedBalance = try await blockchainConnector.getShopBalance(
+                                shopContractAddress: TEST_SHOP_TOKEN_ADDRESS
+                            )
+                            selectedShopBalance = fetchedBalance
+                        } catch {
+                            selectedShopBalance = "0"
                         }
-                } else {
-                    Text("No Shop Item Selected")
-                        .font(Font.system(size: 30))
-                }
+                    }
                 
-                TabView {
-                    VStack{
-                        if let selectedShopId = selectedShopId, let shopItem = shops.first(where: { $0.id == selectedShopId }) {
-                            if let chosenAssetItem = realWorldAssets.first(where: { $0.id == chosenRealWorldAssetId }) {
+                // chosen item and button to buy it
+                HStack {
+                    if let realWorldAsset = chosenRealWorldAsset {
+                        Text(String(realWorldAsset.name))
+                            .foregroundColor(Color.init(hex: "1b264f"))
+                        Spacer()
+                        if transactionPending {
+                            Text("Transaction pending")
+                                .foregroundColor(Color.init(hex: "ffad69"))
+                            Spacer()
+                            ProgressView()
+                        }
+                        else if transactionSuccess {
+                            Text("Transaction Success!")
+                                .foregroundColor(Color.init(hex: "99edcc"))
+                            Spacer()
+                            Image(systemName: "checkmark")
+                        }
+                        else {
+                            Button (action: {
+                                isPresentingConfirm = true
+                            }, label: {
                                 HStack {
-                                    Text(String(chosenAssetItem.name))
-                                        .foregroundColor(Color.init(hex: "1b264f"))
-                                    Spacer()
-                                    if transactionPending {
-                                        Text("Transaction pending")
-                                            .foregroundColor(Color.init(hex: "ffad69"))
-                                        Spacer()
-                                        ProgressView()
-                                    }
-                                    else if transactionSuccess {
-                                        Text("Transaction Success!")
-                                            .foregroundColor(Color.init(hex: "99edcc"))
-                                        Spacer()
-                                        Image(systemName: "checkmark")
-                                    }
-                                    else {
-                                        Button (action: {
-                                            isPresentingConfirm = true
-                                        }, label: {
-                                            HStack {
-                                                Image(systemName: "dollarsign.circle")
-                                                Text(convertToString(amount: chosenAssetItem.price, decimals: 2))
-                                                Text("Spend!")
-                                            }
-                                            .fixedSize()
-                                        })
-                                        .buttonStyle(.borderedProminent)
-                                        .tint(Color.init(hex: "99edcc"))
-                                        .foregroundColor(Color.black)
-                                        .confirmationDialog("Are you sure?",
-                                                            isPresented: $isPresentingConfirm) {
-                                            Button("Spend \(convertToString(amount: chosenAssetItem.price, decimals: 2)) tokens for \(chosenAssetItem.name) ?") {
-                                                transactionPending = true
-                                                
-                                                Task.init {
-                                                    do {
-                                                        try await blockchainConnector.executePayment(shopContractAddress: shopItem.shopContractAddress, amount: chosenAssetItem.price)
-                                                        
-                                                        try await blockchainConnector.updateShopBalance(shopContractAddress: shopItem.shopContractAddress)
-                                                        transactionPending = false
-                                                        transactionSuccess = true
-                                                        Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { __ in
-                                                            transactionSuccess = false
-                                                        }
-                                                    } catch {
-                                                        print("Transaction failed: \(error)")
-                                                    }
+                                    Image(systemName: "dollarsign.circle")
+                                    Text("\(realWorldAsset.price)")
+                                    Text("Spend!")
+                                }
+                                .fixedSize()
+                            }).buttonStyle(.borderedProminent)
+                                .tint(Color.init(hex: "99edcc"))
+                                .foregroundColor(Color.black)
+                                .confirmationDialog(
+                                    "Are you sure?",
+                                    isPresented: $isPresentingConfirm
+                                ) {
+                                    Button("Spend \(realWorldAsset.price) tokens for \(realWorldAsset.name) ?") {
+                                        transactionPending = true
+                                        Task.init {
+                                            do {
+                                                try await blockchainConnector.executePayment(
+                                                    shopContractAddress: TEST_SHOP_TOKEN_ADDRESS,
+                                                    amount: realWorldAsset.price
+                                                )
+                                                let fetchedBalance = try await blockchainConnector.getShopBalance(
+                                                    shopContractAddress: TEST_SHOP_TOKEN_ADDRESS
+                                                )
+                                                selectedShopBalance = fetchedBalance
+
+                                                transactionPending = false
+                                                transactionSuccess = true
+                                                Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { __ in
+                                                    transactionSuccess = false
                                                 }
+                                            } catch {
+                                                print("Transaction failed: \(error)")
                                             }
                                         }
                                     }
                                 }
-                                .padding(.vertical, 10)
-                                .padding(.horizontal, 35)
-                            }
                         }
-                        Text("Choose your good:")
-                            .font(Font.system(size: 24))
-                        
-                        ScrollView {
-                            VStack {
-                                ForEach(realWorldAssets, id: \.id) { item in
-                                    Divider()
-                                    HStack {
-                                        Text(item.name)
-                                            .font(.headline)
-                                            .foregroundColor(Color.init(hex: "1b264f"))
-                                        
-                                        Spacer()
-                                        Text(convertToString(amount: item.price, decimals: 2))
-                                            .font(Font.system(size: 15))
-                                            .foregroundColor(Color.init(hex: "0099f8"))
-                                        
-                                    }
-                                    .padding(.horizontal, 35)
-                                    .padding(.vertical, 10)
-                                    .onTapGesture {
-                                        chosenRealWorldAssetId = item.id
-                                    }
-                                }
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                
+                // item choice scroll menu
+                Text("Choose your good:")
+                    .font(Font.system(size: 24))
+                ScrollView {
+                    VStack {
+                        ForEach(realWorldAssets, id: \.id) { item in
+                            Divider()
+                            HStack {
+                                Text(item.name)
+                                    .font(.headline)
+                                    .foregroundColor(Color.init(hex: "1b264f"))
+                                
+                                Spacer()
+                                Text("\(item.price)")
+                                    .font(Font.system(size: 15))
+                                    .foregroundColor(Color.init(hex: "0099f8"))
+                                
+                            }
+                            .padding(.horizontal, 35)
+                            .padding(.vertical, 10)
+                            .onTapGesture {
+                                chosenRealWorldAsset = item
                             }
                         }
                     }
                 }
-                .accentColor(Color.init(hex: "d14081"))
-            }.padding(.top, 20)
+            }
         }
     }
 }
-
 
 struct RealWorldAsset: Identifiable {
     let id = UUID()
     let icon: String
     let name: String
-    let price: BigUInt
+    let price: Int
 }
 
 let realWorldAssets = [
-    RealWorldAsset(icon: "cup", name: "Latte", price: BigUInt(399)),
-    RealWorldAsset(icon: "coffee", name: "Espresso", price: BigUInt(299)),
-    RealWorldAsset(icon: "drop", name: "Cappuccino", price: BigUInt(449)),
-    RealWorldAsset(icon: "teapot", name: "Tea", price: BigUInt(299)),
-    RealWorldAsset(icon: "milk", name: "Milkshake", price: BigUInt(549)),
-    RealWorldAsset(icon: "cup", name: "Latte", price: BigUInt(399)),
-    RealWorldAsset(icon: "coffee", name: "Espresso", price: BigUInt(299)),
-    RealWorldAsset(icon: "drop", name: "Cappuccino", price: BigUInt(449)),
-    RealWorldAsset(icon: "teapot", name: "Tea", price: BigUInt(299)),
-    RealWorldAsset(icon: "milk", name: "Milkshake", price: BigUInt(549)),
-    RealWorldAsset(icon: "flame", name: "Hot Chocolate", price: BigUInt(499))
+    RealWorldAsset(icon: "cup", name: "Latte", price: 3),
+    RealWorldAsset(icon: "coffee", name: "Espresso", price: 5),
+    RealWorldAsset(icon: "drop", name: "Cappuccino", price: 8),
+    RealWorldAsset(icon: "teapot", name: "Tea", price: 11),
+    RealWorldAsset(icon: "cup", name: "Latte", price: 3),
+    RealWorldAsset(icon: "coffee", name: "Espresso", price: 5),
+    RealWorldAsset(icon: "drop", name: "Cappuccino", price: 8),
+    RealWorldAsset(icon: "teapot", name: "Tea", price: 11),
+    RealWorldAsset(icon: "cup", name: "Latte", price: 3),
+    RealWorldAsset(icon: "coffee", name: "Espresso", price: 5),
+    RealWorldAsset(icon: "drop", name: "Cappuccino", price: 8),
+    RealWorldAsset(icon: "teapot", name: "Tea", price: 11)
 ]
-
 
 extension Color {
     init(hex: String) {
@@ -216,3 +207,5 @@ extension Color {
     }
 }
 
+
+                                                    

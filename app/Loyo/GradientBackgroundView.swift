@@ -14,9 +14,5 @@ struct GradientBackgroundView: View {
             endPoint: .bottomTrailing
         )
         .edgesIgnoringSafeArea(.all)
-        
-        Text("Show this QR code to merchants when you want to receive loyalty points")
-            .padding(.top, 200)
-            .padding(.horizontal, 50)
     }
 }

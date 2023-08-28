@@ -52,6 +52,7 @@ struct SpendBonusPointsView: View {
                     )
                 )
                 .padding(15)
+                .padding(.vertical, 30)
             
             ForEach(shops) { item in
                 HStack {
