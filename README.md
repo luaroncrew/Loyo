@@ -1,5 +1,5 @@
 ![](images/logo.png)
-(built by new Heroes from zero during hackathons ^_^)
+(built from zero during 2 hackathons ^_^)
 
 [![Build and Test](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml/badge.svg)](https://github.com/luaroncrew/Loyo/actions/workflows/test-contracts.yml)
 
@@ -23,6 +23,8 @@ LOYO is two applications, connected to a system of services on the blockchain:
 https://pitch.com/public/71f1c5f5-f052-40e3-9867-873ae42f7eaf
 
 # Technical description
+Loyo smart contracts are written on solidity and require account abstraction in certain cases.
+Loyo will be deployed on **Avalanche** and **Arbitrum** to profit from low-fees fast transactions.
 
 This repository contains all the services, applications, contracts and docs we managed
 to do during the hackathon.
